@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Kanban Board</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <!-- Include Font Awesome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1 class="main-title">Kanban Board</h1>
+    <!-- Dark Mode Toggle Button -->
+    <div class="dark-mode-toggle">
+      <label class="switch">
+        <input type="checkbox" id="dark-mode-toggle-checkbox" />
+        <span class="slider round"></span>
+      </label>
+      <span class="toggle-label">Dark Mode</span>
+    </div>
+    <!-- info -->
+    <!-- Information Section -->
+    <section class="info-section">
+      <div class="info-card">
+        <i class="fas fa-info-circle"></i>
+        <h2>Welcome to the Kanban Board</h2>
+        <p>
+          Manage your tasks efficiently with our Kanban board. Organize tasks
+          into columns, drag and drop items, and track progress.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <i class="fas fa-columns"></i>
+        <h2>Column-Based Workflow</h2>
+        <p>
+          Create custom columns to represent your workflow stages. Use the
+          drag-and-drop feature to move tasks between columns.
+        </p>
+      </div>
+
+      <div class="info-card">
+        <i class="fas fa-check-circle"></i>
+        <h2>Task Completion</h2>
+        <p>
+          Mark tasks as complete when they are done. The "Complete" column is
+          where your finished tasks can be found.
+        </p>
+      </div>
+    </section>
+
+    <div class="drag-container">
+      <ul class="drag-list">
+        <!-- Backlog Column -->
+        <!-- ... Rest of your Kanban board content ... -->
+      </ul>
+    </div>
+    <!-- info -->
+    <div class="drag-container">
+      <ul class="drag-list">
+        <!-- Backlog Column -->
+        <li class="drag-column backlog-column">
+          <span class="header">
+            <h1>Backlog</h1>
+          </span>
+          <!-- Backlog Content -->
+          <div id="backlog-content" class="custom-scroll">
+            <ul
+              class="drag-item-list"
+              id="backlog-list"
+              ondrop="drop(event)"
+              ondragover="allowDrop(event)"
+              ondragenter="dragEnter(0)"
+            ></ul>
+          </div>
+          <!-- Add Button Group -->
+          <div class="add-btn-group">
+            <div class="add-btn" onclick="showInputBox(0)">
+              <span class="plus-sign">+</span>
+              <span>Add Item</span>
+            </div>
+            <div class="add-btn solid" onclick="hideInputBox(0)">
+              <span>Save Item</span>
+            </div>
+          </div>
+          <div class="add-container">
+            <div class="add-item" contenteditable="true"></div>
+          </div>
+        </li>
+        <!-- Progress Column -->
+        <li class="drag-column progress-column">
+          <span class="header">
+            <h1>In Progress</h1>
+          </span>
+          <!-- Progress Content -->
+          <div id="progress-content" class="custom-scroll">
+            <ul
+              class="drag-item-list"
+              id="progress-list"
+              ondrop="drop(event)"
+              ondragover="allowDrop(event)"
+              ondragenter="dragEnter(1)"
+            ></ul>
+          </div>
+          <!-- Add Button Group -->
+          <div class="add-btn-group">
+            <div class="add-btn" onclick="showInputBox(1)">
+              <span class="plus-sign">+</span>
+              <span>Add Item</span>
+            </div>
+            <div class="add-btn solid" onclick="hideInputBox(1)">
+              <span>Save Item</span>
+            </div>
+          </div>
+          <div class="add-container">
+            <div class="add-item" contenteditable="true"></div>
+          </div>
+        </li>
+        <!-- Complete Column -->
+        <li class="drag-column complete-column">
+          <span class="header">
+            <h1>Complete</h1>
+          </span>
+          <!-- Complete Content -->
+          <div id="complete-content" class="custom-scroll">
+            <ul
+              class="drag-item-list"
+              id="complete-list"
+              ondrop="drop(event)"
+              ondragover="allowDrop(event)"
+              ondragenter="dragEnter(2)"
+            ></ul>
+          </div>
+          <!-- Add Button Group -->
+          <div class="add-btn-group">
+            <div class="add-btn" onclick="showInputBox(2)">
+              <span class="plus-sign">+</span>
+              <span>Add Item</span>
+            </div>
+            <div class="add-btn solid" onclick="hideInputBox(2)">
+              <span>Save Item</span>
+            </div>
+          </div>
+          <div class="add-container">
+            <div class="add-item" contenteditable="true"></div>
+          </div>
+        </li>
+        <!-- On Hold Column -->
+        <li class="drag-column on-hold-column">
+          <span class="header">
+            <h1>On Hold</h1>
+          </span>
+          <!-- On Hold Content -->
+          <div id="on-hold-content" class="custom-scroll">
+            <ul
+              class="drag-item-list"
+              id="on-hold-list"
+              ondrop="drop(event)"
+              ondragover="allowDrop(event)"
+              ondragenter="dragEnter(3)"
+            ></ul>
+          </div>
+          <!-- Add Button Group -->
+          <div class="add-btn-group">
+            <div class="add-btn" onclick="showInputBox(3)">
+              <span class="plus-sign">+</span>
+              <span>Add Item</span>
+            </div>
+            <div class="add-btn solid" onclick="hideInputBox(3)">
+              <span>Save Item</span>
+            </div>
+          </div>
+          <div class="add-container">
+            <div class="add-item" contenteditable="true"></div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- Script -->
+    <script src="script.js"></script>
+  </body>
+</html>

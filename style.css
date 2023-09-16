@@ -1,0 +1,389 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Square+Peg&display=swap"); */
+
+html {
+  box-sizing: border-box;
+}
+
+:root {
+  --column-1: #007bff; /* Jira's primary blue color */
+  --column-2: #36b37e; /* Jira's green color */
+  --column-3: #ffab00; /* Jira's yellow color */
+  --column-4: #ff5630; /* Jira's red color */
+}
+
+body {
+  margin: 0;
+  background-color: #f4f5f7; /* Jira's background color */
+  color: #172b4d; /* Jira's text color */
+  font-family: "Muli", sans-serif;
+  overflow-y: scroll;
+}
+
+h1 {
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle text shadow */
+}
+
+.main-title {
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.drag-container {
+  margin: 20px;
+}
+
+.drag-list {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Columns */
+.drag-column {
+  flex: 1;
+  margin: 0 10px;
+  position: relative;
+  background-color: #fff; /* White background */
+  border-radius: 5px;
+  overflow-x: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
+}
+
+/* Header and solid colors for columns */
+.backlog-column .header,
+.backlog-column .solid,
+.backlog-column .solid:hover,
+.backlog-column .over {
+  background-color: var(--column-1);
+  color: white; /* White text on primary blue background */
+}
+
+.progress-column .header,
+.progress-column .solid,
+.progress-column .solid:hover,
+.progress-column .over {
+  background-color: var(--column-2);
+  color: white; /* White text on green background */
+}
+
+.complete-column .header,
+.complete-column .solid,
+.complete-column .solid:hover,
+.complete-column .over {
+  background-color: var(--column-3);
+  color: white; /* White text on yellow background */
+}
+
+.on-hold-column .header,
+.on-hold-column .solid,
+.on-hold-column .solid:hover,
+.on-hold-column .over {
+  background-color: var(--column-4);
+  color: white; /* White text on red background */
+}
+
+/* Custom Scrollbar */
+.custom-scroll {
+  overflow-y: auto;
+  max-height: 52vh;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1); /* Light gray scrollbar track shadow */
+  border-radius: 10px;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.05
+  ); /* Very light gray scrollbar track background */
+  margin-right: 5px;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2); /* Subtle scrollbar thumb shadow */
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent scrollbar thumb */
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+}
+
+/* Drag and Drop */
+.over {
+  padding: 20px 10px;
+}
+
+.drag-item-list {
+  min-height: 50px;
+}
+
+/* Add a subtle shadow to task items */
+.drag-item {
+  margin: 10px;
+  padding: 10px;
+  height: fit-content;
+  background-color: #fff; /* White background */
+  border-radius: 5px;
+  line-height: 1.5rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  color: #172b4d; /* Jira's text color */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.2s ease-in-out; /* Add a smooth transition on hover */
+}
+
+/* Adjust the shadow and transform on hover for a pop-out effect */
+.drag-item:hover {
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+  transform: translateY(-3px); /* Move the task item up slightly on hover */
+}
+
+.drag-item:focus {
+  outline: none;
+  background-color: #f4f5f7; /* Jira's column background color */
+  border: 1px solid #007bff; /* Jira's primary blue border */
+}
+
+/* Add Button Group */
+.add-btn-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-btn {
+  margin: 10px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: fit-content;
+  border-radius: 5px;
+  transition: all 0.3s ease-in;
+  user-select: none;
+  color: #172b4d; /* Jira's text color */
+  background-color: rgba(0, 0, 0, 0.1); /* Light gray background */
+}
+
+.add-btn:hover {
+  background-color: rgba(0, 0, 0, 0.2); /* Slightly darker gray on hover */
+}
+
+.add-btn:active {
+  transform: scale(0.97);
+}
+
+.solid {
+  display: none;
+}
+
+.solid:hover {
+  transition: unset;
+  filter: brightness(95%);
+  color: #172b4d; /* Jira's text color */
+}
+
+.plus-sign {
+  font-size: 1.5rem;
+  margin-right: 5px;
+  position: relative;
+  top: -3px;
+}
+
+.add-container {
+  margin: 10px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #fff; /* White background */
+  min-height: 100px;
+  display: none;
+}
+
+.add-item {
+  width: 100%;
+  min-height: 100px;
+  height: auto;
+  background-color: #fff; /* White background */
+  border-radius: 5px;
+  margin: 5px auto;
+  resize: none;
+  color: #172b4d; /* Jira's text color */
+  padding: 10px;
+}
+
+.add-item:focus {
+  outline: none;
+}
+
+/* info */
+
+/* ... Your existing CSS ... */
+
+/* Information Section */
+.info-section {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  background-color: #f4f5f7; /* Light gray background */
+}
+
+.info-card {
+  text-align: center;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #fff; /* White background */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
+  transition: transform 0.2s ease-in-out; /* Add a smooth transition on hover */
+}
+
+.info-card:hover {
+  transform: translateY(-3px); /* Move the card up slightly on hover */
+}
+
+.info-card i {
+  font-size: 2rem;
+  color: #007bff; /* Jira's primary blue color */
+}
+
+.info-card h2 {
+  font-size: 1.25rem;
+  margin: 10px 0;
+}
+
+.info-card p {
+  font-size: 1rem;
+  color: #333; /* Dark text color */
+  line-height: 1.5;
+}
+
+.task-icon {
+  margin-right: 10px;
+  font-size: 24px; /* Adjust the size as needed */
+  color: #007bff; /* Icon color */
+}
+
+/* Dark Mode */
+.dark-mode {
+  background-color: #000; /* Black background for dark mode */
+  color: #fff; /* White text color in dark mode */
+}
+
+/* Update styles for dark mode */
+.dark-mode h1 {
+  text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.2); /* Subtle text shadow in dark mode */
+}
+
+.dark-mode .drag-column {
+  background-color: #333; /* Dark gray background for columns in dark mode */
+  box-shadow: 0 1px 3px rgba(255, 255, 255, 0.1); /* Subtle box shadow in dark mode */
+}
+
+.dark-mode .drag-item {
+  background-color: #333; /* Dark gray background for task items in dark mode */
+  color: #fff; /* White text color for task items in dark mode */
+  box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.1); /* Subtle shadow in dark mode */
+}
+
+.dark-mode .add-btn {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); /* Light gray background for buttons in dark mode */
+  color: #fff; /* White text color for buttons in dark mode */
+}
+
+.dark-mode .add-btn:hover {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.2
+  ); /* Slightly lighter gray on hover in dark mode */
+}
+
+.dark-mode .solid {
+  filter: brightness(120%); /* Slightly brighten solid buttons in dark mode */
+}
+
+.dark-mode .add-container {
+  background-color: #333; /* Dark gray background for input container in dark mode */
+}
+
+.dark-mode .info-section {
+  background-color: #111;
+}
+.dark-mode .info-cards {
+  background-color: #222; /* Dark background for info cards in dark mode */
+}
+
+.dark-mode .info-card {
+  background-color: #333; /* Dark gray background for individual info cards in dark mode */
+  color: #fff; /* White text color for info cards in dark mode */
+  box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.1); /* Subtle shadow in dark mode */
+}
+
+.dark-mode .info-card h2 {
+  color: #fff; /* White text color for info card headings in dark mode */
+}
+
+.dark-mode .info-card p {
+  color: #fff;
+}
+/* ... Your existing CSS ... */
+
+/* ... Your existing CSS ... */
+
+/* info */
+/* Media Query: Laptop */
+@media screen and (max-width: 1800px) {
+  .main-title {
+    font-size: 2rem;
+  }
+}
+
+/* Media Query: Large Smartphone (Vertical) */
+@media screen and (max-width: 600px) {
+  body {
+    overflow-y: auto;
+  }
+
+  .drag-container {
+    margin: 0;
+  }
+
+  .drag-list {
+    display: block;
+  }
+
+  .drag-column {
+    margin: 10px;
+  }
+  .info-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 5px;
+    background-color: #f4f5f7; /* Light gray background */
+  }
+}
